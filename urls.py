@@ -15,7 +15,6 @@ url_patterns = [
     (r"/", IndexHandler),
     (r"/login",             LoginHandler),
     (r"/logout",            LogoutHandler),
-    (r"/user/profile",      ProfileHandler),
     (r"/apps",              AppListHandler),
     (r"/apps/json",         AppListJsonHandler),
     (r"/apps/create",       AppCreateHandler),
