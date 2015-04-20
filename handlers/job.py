@@ -11,7 +11,7 @@ class JobsListHandler(BaseHandler):
     # @tornado.web.authenticated
     def get(self, *args, **kwargs):
         jobs = session.execute("select * from spark_sql_jobs")
-        self.render('/jobs', jobs=jobs, user=self.current_user)
+        self.render('/jobs', data=jobs, user=self.current_user)
 
 
 class JobHandler(BaseHandler):
@@ -25,7 +25,7 @@ class JobHandler(BaseHandler):
             self.return_json(jobs)
         else:
             jobs = session.execute("select * from spark_sql_jobs")
-            self.render('/jobs', jobs=jobs, user=self.current_user)
+            self.render('/jobs', data=jobs, user=self.current_user)
 
     # @tornado.web.authenticated
     def post(self, *args, **kwargs):

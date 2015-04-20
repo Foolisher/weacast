@@ -13,7 +13,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
 
-def exec_sparkjob(job_id: str, sql: str, ttl: int):
+def exec_sparkjob(job_id, sql, ttl):
     logging.info("rpc spark sql job:[%s]" % sql)
     conn = None
     try:
@@ -28,7 +28,7 @@ def exec_sparkjob(job_id: str, sql: str, ttl: int):
         conn.close()
 
 
-def stop_sparkjob(job_id: str):
+def stop_sparkjob(job_id):
     conn = None
     try:
         conn = httplib2.HTTPConnectionWithTimeout(options.spark_server_host, port=options.spark_server_port, timeout=60 * 10)

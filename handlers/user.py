@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from handlers.base import BaseHandler, tornado
-
+from app.base import session
+from handlers.base import BaseHandler
 import logging
-
-import hashlib
-import uuid
 
 
 class LoginHandler(BaseHandler):
@@ -14,24 +11,24 @@ class LoginHandler(BaseHandler):
 
     def post(self):
         name = self.get_argument("name")
-        user = self.db.execute("SELECT * FROM users WHERE name = %s", name)[0]
+        user = session.execute("SELECT * FROM users WHERE name = %s", name)[0]
         if not user:
             logging.error("user(name=%s) not exist", name)
             self.return_json({"cause": 'user.not.exist'}, 400)
             # self.redirect("/user_not_exist")
             return
 
-        if user.status != 1:
+        if user['status'] != 1:
             logging.error("user(name=%s) status is not normal")
             self.return_json({"cause": "user.status.abnormal"}, 500)
             return
 
-        if user.password != self.get_argument("password"):
+        if user['password'] != self.get_argument("password"):
             logging.error("user(name=%s) password mismatch", name)
             self.return_json({"cause": "password.mismatch"}, 500)
             return
 
-        self.set_secure_cookie("cookie_user_name", str(user.name), expires_days=None)
+        self.set_secure_cookie("cookie_user_name", str(user['name']), expires_days=None)
         self.redirect(self.get_argument("next", "/"))
 
 

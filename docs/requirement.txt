@@ -1,0 +1,13 @@
+
+python = 2.6,2.7
+tornado = 4.1
+cassandra-driver = 2.5
+httplib2 = 0.9.1
+apscheduler = 3.0.2
+
+
+easy_install --user tornado
+easy_install --user cassandra-driver
+easy_install --user httplib2
+easy_install --user apscheduler
+
