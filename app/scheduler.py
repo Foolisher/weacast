@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+  job scheduler
+  e.g. schedule a spark job, restart a spark job or remove/stop spark job
+"""
 import datetime
 import sys
 from tornado.options import options
@@ -14,7 +18,7 @@ from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
 
 def exec_sparkjob(job_id, sql, ttl):
-    logging.info("rpc spark sql job:[%s]" % sql)
+    logging.info("rpc spark sql job(%s):[%s]" % (job_id, sql))
     conn = None
     try:
         conn = httplib2.HTTPConnectionWithTimeout(options.spark_server_host, port=options.spark_server_port, timeout=60 * 10)
@@ -55,7 +59,7 @@ def create_sparkjob(job_id, sql, ttl, **cron_args):
 
 
 def start_sparkjob(job_id):
-    rows = session.execute("SELECT * FROM spark_sql_jobs where job_id='%s'" % job_id)
+    rows = session.execute("SELECT * FROM spark_sql_jobs where job_id=%s", job_id)
     if len(rows) > 0:
         exec_sparkjob(rows[0].job_id, rows[0].sql, rows[0].ttl)
 

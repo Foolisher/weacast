@@ -1,3 +1,8 @@
+"""
+ web app base singleton utils
+ 1. session  cassandra driver crud support
+"""
+
 from cassandra.cluster import Cluster
 from cassandra.decoder import dict_factory
 from tornado.options import options

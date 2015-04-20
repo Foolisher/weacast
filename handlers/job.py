@@ -1,3 +1,7 @@
+"""
+ job management about handlers
+"""
+
 import tornado
 from tornado.web import authenticated
 from app.base import session
