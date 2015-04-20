@@ -70,7 +70,7 @@ def exec_sparksql(sql):
     try:
         sql_str = sql
         logging.info('SQL:\n[%s]\nJSON_SQL:\n[%s]', sql_str, json.dumps({"sql": sql_str}))
-        conn = httplib2.HTTPConnectionWithTimeout('wg-mac', port=9005, timeout=60 * 5)
+        conn = httplib2.HTTPConnectionWithTimeout(options.spark_server_host, port=options.spark_server_port, timeout=60 * 5)
         conn.request(method='POST', url='/sql', body=json.dumps({"sql": sql_str, 'job_id': datetime.datetime.now().timestamp()*1000000}))
         resp = conn.getresponse()
         result = resp.read().decode(encoding='UTF-8', errors='strict')
